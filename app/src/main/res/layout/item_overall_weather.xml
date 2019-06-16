@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/card_overall"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="@dimen/margin_medium"
+    app:cardCornerRadius="@dimen/card_corner"
+    app:cardElevation="@dimen/cardview_default_elevation">
+
+    <RelativeLayout
+        android:id="@+id/rel_view_overall"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/green">
+
+        <TextView
+            android:id="@+id/day_txt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginStart="@dimen/margin_large"
+            android:layout_marginTop="@dimen/margin_large"
+            android:text="@string/today"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_large"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/date_txt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/day_txt"
+            android:layout_marginStart="@dimen/margin_large"
+            android:layout_marginBottom="@dimen/margin_large"
+            android:text="15/06/2015"
+            android:textColor="@color/white" />
+
+        <ImageView
+            android:id="@+id/cloud_img"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/date_txt"
+            android:layout_marginStart="@dimen/margin_large"
+            android:layout_marginEnd="@dimen/margin_big"
+            android:src="@drawable/ic_wb_cloudy_white_24dp" />
+
+        <TextView
+            android:id="@+id/cloud_percentage_txt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/date_txt"
+            android:layout_toEndOf="@id/cloud_img"
+            android:text="@string/percentage_placeholder"
+            android:textColor="@color/white"
+            android:textStyle="bold" />
+
+        <ImageView
+            android:id="@+id/wind_img"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/cloud_img"
+            android:layout_marginStart="@dimen/margin_large"
+            android:layout_marginEnd="@dimen/margin_big"
+            android:src="@drawable/ic_toys_white_24dp" />
+
+        <TextView
+            android:id="@+id/wind_speed_txt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/cloud_img"
+            android:layout_toEndOf="@id/wind_img"
+            android:text="@string/m_per_s_placeholder"
+            android:textColor="@color/white"
+            android:textStyle="bold" />
+
+        <ImageView
+            android:id="@+id/humidity_img"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/wind_img"
+            android:layout_marginStart="@dimen/margin_large"
+            android:layout_marginEnd="@dimen/margin_big"
+            android:layout_marginBottom="@dimen/margin_large"
+            android:src="@drawable/ic_colorize_white_24dp" />
+
+        <TextView
+            android:id="@+id/air_humidity_txt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/wind_img"
+            android:layout_toEndOf="@id/humidity_img"
+            android:text="@string/percentage_placeholder"
+            android:textColor="@color/white"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/weather_condition_txt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="@dimen/margin_large"
+            android:layout_marginEnd="@dimen/margin_large"
+            android:layout_marginBottom="@dimen/margin_large"
+            android:text="Rain"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_large"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/temp_average_txt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/weather_condition_txt"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="-20dp"
+            android:layout_marginEnd="@dimen/margin_large"
+            android:text="@string/temperature_holder"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_huge" />
+
+        <TextView
+            android:id="@+id/temp_amplitude_txt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/temp_average_txt"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="@dimen/margin_large"
+            android:text="@string/temp_amplitude_holder"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_large" />
+
+        <TextView
+            android:id="@+id/weather_detailed_condition_txt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/temp_amplitude_txt"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="@dimen/margin_large"
+            android:text="shower rain"
+            android:textColor="@color/white" />
+
+        <ImageView
+            android:id="@+id/weather_condition_img"
+            android:layout_width="@dimen/image_size_big"
+            android:layout_height="@dimen/image_size_big"
+            android:layout_centerInParent="true"
+            android:alpha="0.3"
+            android:src="@drawable/ic_wi_cloudy" />
+
+    </RelativeLayout>
+
+</android.support.v7.widget.CardView>
