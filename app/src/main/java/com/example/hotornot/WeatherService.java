@@ -1,5 +1,7 @@
 package com.example.hotornot;
 
+import com.example.hotornot.model.DailyForecast;
+
 import retrofit2.http.GET;
 import retrofit2.http.Path;
 
