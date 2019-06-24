@@ -1,8 +1,8 @@
 package com.example.hotornot;
 
 import android.content.Context;
-import android.support.design.widget.TabLayout;
-import android.support.v4.content.ContextCompat;
+import com.google.android.material.tabs.TabLayout;
+import androidx.core.content.ContextCompat;
 
 public class Configurations {
 
