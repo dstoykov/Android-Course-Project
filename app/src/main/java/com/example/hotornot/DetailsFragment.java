@@ -3,14 +3,19 @@ package com.example.hotornot;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-public class DetailsFragment extends Fragment {
+import com.example.hotornot.databinding.FragmentDetailsBinding;
+import com.example.hotornot.retrofit.RetrofitInstance;
 
+public class DetailsFragment extends Fragment {
     private GpsLocation gpsLocation;
+    private RetrofitInstance retrofit;
+    private FragmentDetailsBinding binding;
 
     public DetailsFragment() {
     }
@@ -18,15 +23,14 @@ public class DetailsFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull final LayoutInflater inflater, @Nullable final ViewGroup container, @Nullable final Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_details, container, false);
-        gpsLocation = GpsLocation.getInstance(getActivity());
-        System.out.println(gpsLocation.getLocation());
-        return view;
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_details, container, false);
+        return binding.getRoot();
     }
 
     @Override
-    public void onResume() {
-        super.onResume();
-        System.out.println(gpsLocation.getLocation());
+    public void onCreate(@Nullable final Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        gpsLocation = GpsLocation.getInstance(getActivity());
+        retrofit = RetrofitInstance.getInstance();
     }
 }

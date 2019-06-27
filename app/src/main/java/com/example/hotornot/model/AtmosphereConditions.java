@@ -1,26 +1,26 @@
 package com.example.hotornot.model;
 
 public class AtmosphereConditions {
-    private Integer temp;
+    private Double temp;
     private Integer humidity;
-    private Integer temp_min;
-    private Integer temp_max;
+    private Double temp_min;
+    private Double temp_max;
 
     public AtmosphereConditions() {
     }
 
-    public AtmosphereConditions(final Integer temp, final Integer humidity, final Integer temp_min, final Integer temp_max) {
+    public AtmosphereConditions(final Double temp, final Integer humidity, final Double temp_min, final Double temp_max) {
         this.temp = temp;
         this.humidity = humidity;
         this.temp_min = temp_min;
         this.temp_max = temp_max;
     }
 
-    public Integer getTemp() {
+    public Double getTemp() {
         return this.temp;
     }
 
-    public void setTemp(final Integer temp) {
+    public void setTemp(final Double temp) {
         this.temp = temp;
     }
 
@@ -32,19 +32,19 @@ public class AtmosphereConditions {
         this.humidity = humidity;
     }
 
-    public Integer getTemp_min() {
+    public Double getTemp_min() {
         return this.temp_min;
     }
 
-    public void setTemp_min(final Integer temp_min) {
+    public void setTemp_min(final Double temp_min) {
         this.temp_min = temp_min;
     }
 
-    public Integer getTemp_max() {
+    public Double getTemp_max() {
         return this.temp_max;
     }
 
-    public void setTemp_max(final Integer temp_max) {
+    public void setTemp_max(final Double temp_max) {
         this.temp_max = temp_max;
     }
 }

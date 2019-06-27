@@ -8,4 +8,5 @@
     <color name="green">#34AF71</color>
     <color name="yellow">#F2B634</color>
     <color name="lightGrey">#9E9E9E</color>
+    <color name="snackbarActionTextColor">#BBBBBB</color>
 </resources>

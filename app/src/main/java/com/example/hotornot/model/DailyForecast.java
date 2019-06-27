@@ -1,70 +1,82 @@
 package com.example.hotornot.model;
 
+import java.util.List;
+
 public class DailyForecast {
-    private WeatherList weather;
-    private AtmosphereConditions main;
-    private Wind wind;
-    private Clouds clouds;
-    private String name;
-    private Long dt;
+    private Temperature temp;
+    private Double pressure;
+    private Integer humidity;
+    private List<Weather> weather;
+    private Double speed;
+    private Integer clouds;
+    private Integer rain;
 
     public DailyForecast() {
     }
 
-    public DailyForecast(final WeatherList weather, final AtmosphereConditions main, final Wind wind, final Clouds clouds, final String name, final Long dt) {
+    public DailyForecast(final Temperature temp, final Double pressure, final Integer humidity, final List<Weather> weather, final Double speed, final Integer clouds, final Integer rain) {
+        this.temp = temp;
+        this.pressure = pressure;
+        this.humidity = humidity;
         this.weather = weather;
-        this.main = main;
-        this.wind = wind;
+        this.speed = speed;
         this.clouds = clouds;
-        this.name = name;
-        this.dt = dt;
+        this.rain = rain;
     }
 
-    public WeatherList getWeather() {
+    public Temperature getTemp() {
+        return this.temp;
+    }
+
+    public void setTemp(final Temperature temp) {
+        this.temp = temp;
+    }
+
+    public Double getPressure() {
+        return this.pressure;
+    }
+
+    public void setPressure(final Double pressure) {
+        this.pressure = pressure;
+    }
+
+    public Integer getHumidity() {
+        return this.humidity;
+    }
+
+    public void setHumidity(final Integer humidity) {
+        this.humidity = humidity;
+    }
+
+    public List<Weather> getWeather() {
         return this.weather;
     }
 
-    public void setWeather(final WeatherList weather) {
+    public void setWeather(final List<Weather> weather) {
         this.weather = weather;
     }
 
-    public AtmosphereConditions getMain() {
-        return this.main;
+    public Double getSpeed() {
+        return this.speed;
     }
 
-    public void setMain(final AtmosphereConditions main) {
-        this.main = main;
+    public void setSpeed(final Double speed) {
+        this.speed = speed;
     }
 
-    public Wind getWind() {
-        return this.wind;
-    }
-
-    public void setWind(final Wind wind) {
-        this.wind = wind;
-    }
-
-    public Clouds getClouds() {
+    public Integer getClouds() {
         return this.clouds;
     }
 
-    public void setClouds(final Clouds clouds) {
+    public void setClouds(final Integer clouds) {
         this.clouds = clouds;
     }
 
-    public String getName() {
-        return this.name;
+    public Integer getRain() {
+        return this.rain;
     }
 
-    public void setName(final String name) {
-        this.name = name;
-    }
-
-    public Long getDt() {
-        return this.dt;
-    }
-
-    public void setDt(final Long dt) {
-        this.dt = dt;
+    public void setRain(final Integer rain) {
+        this.rain = rain;
     }
 }

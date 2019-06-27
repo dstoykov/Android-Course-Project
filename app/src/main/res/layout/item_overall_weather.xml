@@ -15,7 +15,7 @@
         android:background="@color/green">
 
         <TextView
-            android:id="@+id/day_txt"
+            android:id="@+id/day_today_txt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
@@ -28,69 +28,69 @@
             android:textStyle="bold" />
 
         <TextView
-            android:id="@+id/date_txt"
+            android:id="@+id/date_today_txt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/day_txt"
+            android:layout_below="@id/day_today_txt"
             android:layout_marginStart="@dimen/margin_large"
             android:layout_marginBottom="@dimen/margin_large"
             android:text="15/06/2015"
             android:textColor="@color/white" />
 
         <ImageView
-            android:id="@+id/cloud_img"
+            android:id="@+id/cloud_today_img"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/date_txt"
+            android:layout_below="@id/date_today_txt"
             android:layout_marginStart="@dimen/margin_large"
             android:layout_marginEnd="@dimen/margin_big"
             android:src="@drawable/ic_wb_cloudy_white_24dp" />
 
         <TextView
-            android:id="@+id/cloud_percentage_txt"
+            android:id="@+id/cloud_percentage_today_txt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/date_txt"
-            android:layout_toEndOf="@id/cloud_img"
+            android:layout_below="@id/date_today_txt"
+            android:layout_toEndOf="@id/cloud_today_img"
             android:text="@string/percentage_placeholder"
             android:textColor="@color/white"
             android:textStyle="bold" />
 
         <ImageView
-            android:id="@+id/wind_img"
+            android:id="@+id/wind_today_img"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/cloud_img"
+            android:layout_below="@id/cloud_today_img"
             android:layout_marginStart="@dimen/margin_large"
             android:layout_marginEnd="@dimen/margin_big"
             android:src="@drawable/ic_toys_white_24dp" />
 
         <TextView
-            android:id="@+id/wind_speed_txt"
+            android:id="@+id/wind_speed_today_txt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/cloud_img"
-            android:layout_toEndOf="@id/wind_img"
+            android:layout_below="@id/cloud_today_img"
+            android:layout_toEndOf="@id/wind_today_img"
             android:text="@string/m_per_s_placeholder"
             android:textColor="@color/white"
             android:textStyle="bold" />
 
         <ImageView
-            android:id="@+id/humidity_img"
+            android:id="@+id/humidity_today_img"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/wind_img"
+            android:layout_below="@id/wind_today_img"
             android:layout_marginStart="@dimen/margin_large"
             android:layout_marginEnd="@dimen/margin_big"
             android:layout_marginBottom="@dimen/margin_large"
             android:src="@drawable/ic_colorize_white_24dp" />
 
         <TextView
-            android:id="@+id/air_humidity_txt"
+            android:id="@+id/air_humidity_today_txt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/wind_img"
-            android:layout_toEndOf="@id/humidity_img"
+            android:layout_below="@id/wind_today_img"
+            android:layout_toEndOf="@id/humidity_today_img"
             android:text="@string/percentage_placeholder"
             android:textColor="@color/white"
             android:textStyle="bold" />

@@ -10,11 +10,11 @@ import android.location.LocationManager;
 import android.provider.Settings;
 
 import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
 import com.google.android.material.snackbar.Snackbar;
 
 public class GpsLocation {
-    private static final Integer LOCATION_REQUEST_CODE = 7;
     private static final String SNACKBAR_MSG = "You have to enable Location information";
 
     private static GpsLocation instance;
@@ -45,7 +45,7 @@ public class GpsLocation {
         if (ActivityCompat.checkSelfPermission(contextActivity, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(contextActivity,
                     new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
-                    LOCATION_REQUEST_CODE);
+                    AppUtils.LOCATION_REQUEST_CODE);
         } else {
             if (!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
                 showSnackbar();
@@ -59,7 +59,13 @@ public class GpsLocation {
         Snackbar snackbar =
                 Snackbar.make(contextActivity.findViewById(R.id.content_view_pager),
                         SNACKBAR_MSG, Snackbar.LENGTH_INDEFINITE);
-        snackbar.setAction("SETTINGS", l -> openSettingsScreen());
+        snackbar.setAction("SETTINGS", l -> openSettingsScreen())
+                .setActionTextColor(ContextCompat
+                        .getColor(
+                                contextActivity.getApplicationContext(),
+                                R.color.snackbarActionTextColor
+                        )
+                );
         snackbar.show();
     }
 

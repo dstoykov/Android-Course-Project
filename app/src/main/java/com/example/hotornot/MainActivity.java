@@ -1,8 +1,11 @@
 package com.example.hotornot;
 
+import androidx.core.app.ActivityCompat;
 import androidx.databinding.DataBindingUtil;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.Manifest;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 
 import androidx.appcompat.widget.Toolbar;
@@ -13,7 +16,8 @@ import android.view.MenuInflater;
 import com.example.hotornot.databinding.ActivityMainBinding;
 
 public class MainActivity extends AppCompatActivity {
-    public static final String BASE_URL = "https://api.openweathermap.org/data/2.5/";
+    public static final String OVERALL_TAB_TITLE = "Overall";
+    public static final String DETAILS_TAB_TITLE = "Details";
 
     private ActivityMainBinding binding;
     private FragmentViewPagerAdapter fragmentViewPagerAdapter;
@@ -29,14 +33,23 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar((Toolbar) binding.toolbar);
         Configurations.configureTabLayoutTextColors(binding.tabLayout, R.color.lightGrey, R.color.white, this);
         initFragments();
+        askForLocationPermission();
     }
 
     private void initFragments() {
         fragmentViewPagerAdapter = new FragmentViewPagerAdapter(getSupportFragmentManager());
-        fragmentViewPagerAdapter.addFragment(new OverallFragment(), "Overall");
-        fragmentViewPagerAdapter.addFragment(new DetailsFragment(), "Details");
+        fragmentViewPagerAdapter.addFragment(new OverallFragment(), OVERALL_TAB_TITLE);
+        fragmentViewPagerAdapter.addFragment(new DetailsFragment(), DETAILS_TAB_TITLE);
         binding.contentViewPager.setAdapter(fragmentViewPagerAdapter);
         binding.tabLayout.setupWithViewPager(binding.contentViewPager);
+    }
+
+    private void askForLocationPermission() {
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this,
+                    new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
+                    AppUtils.LOCATION_REQUEST_CODE);
+        }
     }
 
     @Override
