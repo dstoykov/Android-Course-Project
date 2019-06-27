@@ -1,6 +1,6 @@
 package com.example.hotornot.retrofit;
 
-import com.example.hotornot.HourlyForecast;
+import com.example.hotornot.model.HourlyForecast;
 import com.example.hotornot.model.TodayForecast;
 import com.example.hotornot.model.TomorrowForecast;
 
@@ -41,10 +41,10 @@ public interface WeatherService {
 
     @GET("forecast")
     Call<HourlyForecast> hourlyForecastByCoordinates(@Query("lat") Double lat,
-                                               @Query("lon") Double lon,
-                                               @Query("appid") String apiKey,
-                                               @Query("cnt") Integer daysCount,
-                                               @Query("units") String units);
+                                                     @Query("lon") Double lon,
+                                                     @Query("appid") String apiKey,
+                                                     @Query("cnt") Integer daysCount,
+                                                     @Query("units") String units);
 
     @GET("forecast")
     Call<HourlyForecast> hourlyForecastByTownName(@Query("q") String town,

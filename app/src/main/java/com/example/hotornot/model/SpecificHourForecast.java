@@ -1,30 +1,38 @@
 package com.example.hotornot.model;
 
+import java.util.List;
+
 public class SpecificHourForecast {
-    private WeatherList weather;
+    private Long dt;
+    private List<Weather> weather;
     private AtmosphereConditions main;
     private Wind wind;
     private Clouds clouds;
-    private String name;
-    private String dt_txt;
 
     public SpecificHourForecast() {
     }
 
-    public SpecificHourForecast(final WeatherList weather, final AtmosphereConditions main, final Wind wind, final Clouds clouds, final String name, final String dt_txt) {
+    public SpecificHourForecast(final Long dt, final List<Weather> weather, final AtmosphereConditions main, final Wind wind, final Clouds clouds) {
+        this.dt = dt;
         this.weather = weather;
         this.main = main;
         this.wind = wind;
         this.clouds = clouds;
-        this.name = name;
-        this.dt_txt = dt_txt;
     }
 
-    public WeatherList getWeather() {
+    public Long getDt() {
+        return this.dt;
+    }
+
+    public void setDt(final Long dt) {
+        this.dt = dt;
+    }
+
+    public List<Weather> getWeather() {
         return this.weather;
     }
 
-    public void setWeather(final WeatherList weather) {
+    public void setWeather(final List<Weather> weather) {
         this.weather = weather;
     }
 
@@ -50,21 +58,5 @@ public class SpecificHourForecast {
 
     public void setClouds(final Clouds clouds) {
         this.clouds = clouds;
-    }
-
-    public String getName() {
-        return this.name;
-    }
-
-    public void setName(final String name) {
-        this.name = name;
-    }
-
-    public String getDt_txt() {
-        return this.dt_txt;
-    }
-
-    public void setDt_txt(final String dt_txt) {
-        this.dt_txt = dt_txt;
     }
 }

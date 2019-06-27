@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/card_details"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:layout_marginStart="@dimen/margin_medium"
     android:layout_marginTop="@dimen/margin_medium"
-    android:layout_marginBottom="@dimen/margin_medium"
-    app:cardCornerRadius="@dimen/cardview_default_radius"
+    android:layout_marginEnd="@dimen/margin_medium"
+    app:cardCornerRadius="@dimen/card_corner"
     app:cardElevation="@dimen/cardview_default_elevation">
 
     <RelativeLayout
@@ -17,7 +17,7 @@
         android:background="@color/green">
 
         <TextView
-            android:id="@+id/date_time_txt"
+            android:id="@+id/date_time_txt_details"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/margin_large"
@@ -28,10 +28,10 @@
             android:textStyle="bold" />
 
         <TextView
-            android:id="@+id/weather_condition_txt"
+            android:id="@+id/weather_condition_txt_details_fragment"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/date_time_txt"
+            android:layout_below="@id/date_time_txt_details"
             android:layout_marginStart="@dimen/margin_large"
             android:text="Clouds"
             android:textColor="@color/white"
@@ -39,17 +39,17 @@
             android:textStyle="bold" />
 
         <TextView
-            android:id="@+id/weather_detailed_condition_txt"
+            android:id="@+id/weather_detailed_condition_txt_details"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/weather_condition_txt"
+            android:layout_below="@id/weather_condition_txt_details_fragment"
             android:layout_marginStart="@dimen/margin_large"
             android:layout_marginBottom="@dimen/margin_large"
             android:text="broken clouds"
             android:textColor="@color/white" />
 
         <TextView
-            android:id="@+id/temperature_txt"
+            android:id="@+id/temperature_txt_details"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
@@ -58,6 +58,14 @@
             android:text="@string/temperature_holder"
             android:textColor="@color/white"
             android:textSize="@dimen/text_huge" />
+
+        <ImageView
+            android:id="@+id/weather_condition_img_details_fragment"
+            android:layout_width="@dimen/image_size_small"
+            android:layout_height="@dimen/image_size_small"
+            android:layout_centerInParent="true"
+            android:alpha="0.3"
+            android:src="@drawable/ic_wi_cloudy" />
 
     </RelativeLayout>
 

@@ -1,6 +1,5 @@
 package com.example.hotornot;
 
-import android.content.Intent;
 import android.location.Location;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
@@ -9,7 +8,6 @@ import androidx.core.content.ContextCompat;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 
-import android.provider.Settings;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,7 +24,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class OverallFragment extends Fragment {
-    private static final String INTERNET_SNACKBAR_MSG = "Turn on Wi-Fi or mobile data";
+    private static final String INTERNET_SNACKBAR_MSG = "No Internet connection";
 
     private GpsLocation gpsLocation;
     private RetrofitInstance retrofit;
