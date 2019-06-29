@@ -1,4 +1,4 @@
-package com.example.hotornot.model;
+package com.example.hotornot.model.helper;
 
 import java.util.List;
 

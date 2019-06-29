@@ -1,4 +1,4 @@
-package com.example.hotornot.model;
+package com.example.hotornot.model.helper;
 
 public class AtmosphereConditions {
     private Double temp;

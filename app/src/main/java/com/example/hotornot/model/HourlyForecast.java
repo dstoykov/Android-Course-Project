@@ -1,5 +1,8 @@
 package com.example.hotornot.model;
 
+import com.example.hotornot.model.helper.City;
+import com.example.hotornot.model.helper.SpecificHourForecast;
+
 import java.util.List;
 
 public class HourlyForecast {

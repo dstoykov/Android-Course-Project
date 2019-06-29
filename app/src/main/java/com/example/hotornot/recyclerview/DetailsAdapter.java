@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.hotornot.AppUtils;
 import com.example.hotornot.R;
-import com.example.hotornot.model.SpecificHourForecast;
+import com.example.hotornot.model.helper.SpecificHourForecast;
 
 import java.util.List;
 

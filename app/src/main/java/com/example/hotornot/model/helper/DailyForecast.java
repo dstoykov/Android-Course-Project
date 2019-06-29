@@ -1,4 +1,4 @@
-package com.example.hotornot.model;
+package com.example.hotornot.model.helper;
 
 import java.util.List;
 
@@ -9,12 +9,12 @@ public class DailyForecast {
     private List<Weather> weather;
     private Double speed;
     private Integer clouds;
-    private Integer rain;
+    private Double rain;
 
     public DailyForecast() {
     }
 
-    public DailyForecast(final Temperature temp, final Double pressure, final Integer humidity, final List<Weather> weather, final Double speed, final Integer clouds, final Integer rain) {
+    public DailyForecast(final Temperature temp, final Double pressure, final Integer humidity, final List<Weather> weather, final Double speed, final Integer clouds, final Double rain) {
         this.temp = temp;
         this.pressure = pressure;
         this.humidity = humidity;
@@ -72,11 +72,11 @@ public class DailyForecast {
         this.clouds = clouds;
     }
 
-    public Integer getRain() {
+    public Double getRain() {
         return this.rain;
     }
 
-    public void setRain(final Integer rain) {
+    public void setRain(final Double rain) {
         this.rain = rain;
     }
 }

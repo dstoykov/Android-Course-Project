@@ -1,5 +1,10 @@
 package com.example.hotornot.model;
 
+import com.example.hotornot.model.helper.AtmosphereConditions;
+import com.example.hotornot.model.helper.Clouds;
+import com.example.hotornot.model.helper.Weather;
+import com.example.hotornot.model.helper.Wind;
+
 import java.util.List;
 
 public class TodayForecast {

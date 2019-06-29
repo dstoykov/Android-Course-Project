@@ -129,6 +129,7 @@ public class OverallFragment extends Fragment {
 
             @Override
             public void onFailure(Call<TomorrowForecast> call, Throwable t) {
+                t.printStackTrace();
                 makeNoInternetSnackbar();
             }
         });
