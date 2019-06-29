@@ -10,11 +10,12 @@ public class DailyForecast {
     private Double speed;
     private Integer clouds;
     private Double rain;
+    private Long dt;
 
     public DailyForecast() {
     }
 
-    public DailyForecast(final Temperature temp, final Double pressure, final Integer humidity, final List<Weather> weather, final Double speed, final Integer clouds, final Double rain) {
+    public DailyForecast(final Temperature temp, final Double pressure, final Integer humidity, final List<Weather> weather, final Double speed, final Integer clouds, final Double rain, final Long dt) {
         this.temp = temp;
         this.pressure = pressure;
         this.humidity = humidity;
@@ -22,6 +23,7 @@ public class DailyForecast {
         this.speed = speed;
         this.clouds = clouds;
         this.rain = rain;
+        this.dt = dt;
     }
 
     public Temperature getTemp() {
@@ -78,5 +80,13 @@ public class DailyForecast {
 
     public void setRain(final Double rain) {
         this.rain = rain;
+    }
+
+    public Long getDt() {
+        return this.dt;
+    }
+
+    public void setDt(final Long dt) {
+        this.dt = dt;
     }
 }

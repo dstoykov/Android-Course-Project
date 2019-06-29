@@ -4,7 +4,6 @@ import android.location.Location;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.core.content.ContextCompat;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 
@@ -13,19 +12,19 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.hotornot.databinding.FragmentOverallBinding;
+import com.example.hotornot.gps.GpsLocation;
 import com.example.hotornot.model.TodayForecast;
 import com.example.hotornot.model.TomorrowForecast;
 import com.example.hotornot.retrofit.RetrofitInstance;
 import com.example.hotornot.retrofit.WeatherService;
-import com.google.android.material.snackbar.Snackbar;
+import com.example.hotornot.util.AppUtils;
+import com.example.hotornot.util.SnackbarMaker;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
 public class OverallFragment extends Fragment {
-    private static final String INTERNET_SNACKBAR_MSG = "No Internet connection";
-
     private GpsLocation gpsLocation;
     private RetrofitInstance retrofit;
     private FragmentOverallBinding binding;
@@ -80,7 +79,7 @@ public class OverallFragment extends Fragment {
 
             @Override
             public void onFailure(Call<TodayForecast> call, Throwable t) {
-                makeNoInternetSnackbar();
+                SnackbarMaker.showNoInternetSnackbar(getActivity());
             }
         });
     }
@@ -130,7 +129,7 @@ public class OverallFragment extends Fragment {
             @Override
             public void onFailure(Call<TomorrowForecast> call, Throwable t) {
                 t.printStackTrace();
-                makeNoInternetSnackbar();
+                SnackbarMaker.showNoInternetSnackbar(getActivity());
             }
         });
     }
@@ -145,18 +144,5 @@ public class OverallFragment extends Fragment {
         binding.tempAmplitudeTomorrowTxt.setText(String.format(binding.tempAmplitudeTomorrowTxt.getText().toString(), tomorrowForecast.getList().get(0).getTemp().getMin().intValue(), tomorrowForecast.getList().get(0).getTemp().getMax().intValue()));
         binding.weatherDetailedConditionTomorrowTxt.setText(tomorrowForecast.getList().get(0).getWeather().get(0).getDescription());
         binding.weatherConditionTomorrowImg.setImageResource(AppUtils.getCardBackgroundImage(tomorrowForecast.getList().get(0).getWeather().get(0).getMain()));
-    }
-
-    private void makeNoInternetSnackbar() {
-        Snackbar snackbar = Snackbar.make(getActivity().findViewById(R.id.content_view_pager),
-                        INTERNET_SNACKBAR_MSG, Snackbar.LENGTH_INDEFINITE);
-        snackbar.setAction("OK", l -> snackbar.dismiss())
-                .setActionTextColor(ContextCompat
-                        .getColor(
-                                getActivity().getApplicationContext(),
-                                R.color.snackbarActionTextColor
-                        )
-                );
-        snackbar.show();
     }
 }

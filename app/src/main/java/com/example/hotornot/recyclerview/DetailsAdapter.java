@@ -7,7 +7,7 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.hotornot.AppUtils;
+import com.example.hotornot.util.AppUtils;
 import com.example.hotornot.R;
 import com.example.hotornot.model.helper.SpecificHourForecast;
 

@@ -14,6 +14,8 @@ import android.view.Menu;
 import android.view.MenuInflater;
 
 import com.example.hotornot.databinding.ActivityMainBinding;
+import com.example.hotornot.util.AppUtils;
+import com.example.hotornot.util.Configurations;
 
 public class MainActivity extends AppCompatActivity {
     public static final String OVERALL_TAB_TITLE = "Overall";

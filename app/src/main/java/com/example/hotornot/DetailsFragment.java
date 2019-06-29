@@ -14,10 +14,12 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.hotornot.databinding.FragmentDetailsBinding;
+import com.example.hotornot.gps.GpsLocation;
 import com.example.hotornot.model.HourlyForecast;
 import com.example.hotornot.recyclerview.DetailsAdapter;
 import com.example.hotornot.retrofit.RetrofitInstance;
 import com.example.hotornot.retrofit.WeatherService;
+import com.example.hotornot.util.AppUtils;
 import com.google.android.material.snackbar.Snackbar;
 
 import retrofit2.Call;
