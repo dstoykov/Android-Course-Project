@@ -1,4 +1,4 @@
-package com.example.hotornot;
+package com.example.hotornot.ui.fragments;
 
 import android.location.Location;
 import android.os.Bundle;
@@ -11,13 +11,18 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.hotornot.R;
 import com.example.hotornot.databinding.FragmentOverallBinding;
+import com.example.hotornot.db.Forecast;
+import com.example.hotornot.db.RoomInstance;
 import com.example.hotornot.gps.GpsLocation;
 import com.example.hotornot.model.TodayForecast;
 import com.example.hotornot.model.TomorrowForecast;
 import com.example.hotornot.retrofit.RetrofitInstance;
 import com.example.hotornot.retrofit.WeatherService;
 import com.example.hotornot.util.AppUtils;
+import com.example.hotornot.util.CardFiller;
+import com.example.hotornot.util.ModelMapper;
 import com.example.hotornot.util.SnackbarMaker;
 
 import retrofit2.Call;
@@ -27,35 +32,51 @@ import retrofit2.Response;
 public class OverallFragment extends Fragment {
     private GpsLocation gpsLocation;
     private RetrofitInstance retrofit;
+    private RoomInstance room;
     private FragmentOverallBinding binding;
     private Location location;
 
-    public OverallFragment() {
-    }
+    public OverallFragment() {}
 
     @Nullable
     @Override
     public View onCreateView(@NonNull final LayoutInflater inflater, @Nullable final ViewGroup container, @Nullable final Bundle savedInstanceState) {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_overall, container, false);
+        gpsLocation = GpsLocation.getInstance(getActivity());
+        retrofit = RetrofitInstance.getInstance();
+        room = RoomInstance.getInstance(getContext());
+        loadForecast();
         return binding.getRoot();
     }
 
     @Override
     public void onCreate(@Nullable final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        gpsLocation = GpsLocation.getInstance(getActivity());
-        retrofit = RetrofitInstance.getInstance();
-        getTodayForecast();
-        getTomorrowForecast();
     }
 
-    private void getTodayForecast() {
+    private void loadForecast() {
+        room.getLastDateAdded(date -> {
+            if (date == null) {
+                getTodayForecastFromApi();
+                getTomorrowForecastFromApi();
+            } else if (AppUtils.are3HoursPassed(date)) {
+                clearDb();
+                getTodayForecastFromApi();
+                getTomorrowForecastFromApi();
+            } else {
+                loadTodayDataFromDb();
+                loadTomorrowDataFromDb();
+            }
+        });
+    }
+
+    private void getTodayForecastFromApi() {
         Call<TodayForecast> todayForecast;
         location = gpsLocation.getLocation();
         if (location == null) {
             todayForecast = retrofit.getWeatherService().todayForecastByCoordinates(
-                    AppUtils.DEFAULT_LATITUDE,
-                    AppUtils.DEFAULT_LONGITUDE,
+                    GpsLocation.DEFAULT_LATITUDE,
+                    GpsLocation.DEFAULT_LONGITUDE,
                     WeatherService.APP_ID,
                     WeatherService.UNITS_METRIC
             );
@@ -74,7 +95,11 @@ public class OverallFragment extends Fragment {
         todayForecast.enqueue(new Callback<TodayForecast>() {
             @Override
             public void onResponse(Call<TodayForecast> call, Response<TodayForecast> response) {
-                fillTodayCardView(response.body());
+                Forecast today = ModelMapper.getDbEntityFromTodayForecast(response.body());
+                System.out.println(today.getTown());
+                System.out.println(today.getType());
+                room.insertSingleAsync(today);
+                loadTodayDataFromDb();
             }
 
             @Override
@@ -84,25 +109,13 @@ public class OverallFragment extends Fragment {
         });
     }
 
-    private void fillTodayCardView(TodayForecast todayForecast) {
-        binding.relViewTodayOverall.setBackgroundResource(AppUtils.getCardBackgroundColor(todayForecast.getMain().getTemp()));
-        binding.cloudPercentageTodayTxt.setText(String.format(binding.cloudPercentageTodayTxt.getText().toString(), todayForecast.getClouds().getAll()));
-        binding.windSpeedTodayTxt.setText(String.format(binding.windSpeedTodayTxt.getText().toString(), todayForecast.getWind().getSpeed().intValue()));
-        binding.airHumidityTodayTxt.setText(String.format(binding.airHumidityTodayTxt.getText().toString(), todayForecast.getMain().getHumidity()));
-        binding.weatherConditionTodayTxt.setText(todayForecast.getWeather().get(0).getMain());
-        binding.tempAverageTodayTxt.setText(String.format(binding.tempAverageTodayTxt.getText().toString(), todayForecast.getMain().getTemp().intValue()));
-        binding.tempAmplitudeTodayTxt.setText(String.format(binding.tempAmplitudeTodayTxt.getText().toString(), todayForecast.getMain().getTemp_min().intValue(), todayForecast.getMain().getTemp_max().intValue()));
-        binding.weatherDetailedConditionTodayTxt.setText(todayForecast.getWeather().get(0).getDescription());
-        binding.weatherConditionTodayImg.setImageResource(AppUtils.getCardBackgroundImage(todayForecast.getWeather().get(0).getMain()));
-    }
-
-    private void getTomorrowForecast() {
+    private void getTomorrowForecastFromApi() {
         Call<TomorrowForecast> tomorrowForecast;
         location = gpsLocation.getLocation();
         if (location == null) {
             tomorrowForecast = retrofit.getWeatherService().tomorrowForecastByCoordinates(
-                    AppUtils.DEFAULT_LATITUDE,
-                    AppUtils.DEFAULT_LONGITUDE,
+                    GpsLocation.DEFAULT_LATITUDE,
+                    GpsLocation.DEFAULT_LONGITUDE,
                     WeatherService.APP_ID,
                     WeatherService.UNITS_METRIC,
                     WeatherService.TOMORROW_FORECAST_CNT
@@ -123,7 +136,11 @@ public class OverallFragment extends Fragment {
         tomorrowForecast.enqueue(new Callback<TomorrowForecast>() {
             @Override
             public void onResponse(Call<TomorrowForecast> call, Response<TomorrowForecast> response) {
-                fillTomorrowCardView(response.body());
+                Forecast tomorrow = ModelMapper.getDbEntityFromTomorrowForecast(response.body());
+                System.out.println(tomorrow.getTown());
+                System.out.println(tomorrow.getType());
+                room.insertSingleAsync(tomorrow);
+                loadTomorrowDataFromDb();
             }
 
             @Override
@@ -134,15 +151,15 @@ public class OverallFragment extends Fragment {
         });
     }
 
-    private void fillTomorrowCardView(TomorrowForecast tomorrowForecast) {
-        binding.relViewTomorrowOverall.setBackgroundResource(AppUtils.getCardBackgroundColor(tomorrowForecast.getList().get(0).getTemp().getDay()));
-        binding.cloudPercentageTomorrowTxt.setText(String.format(binding.cloudPercentageTomorrowTxt.getText().toString(), tomorrowForecast.getList().get(0).getClouds()));
-        binding.windSpeedTomorrowTxt.setText(String.format(binding.windSpeedTomorrowTxt.getText().toString(), tomorrowForecast.getList().get(0).getSpeed().intValue()));
-        binding.airHumidityTomorrowTxt.setText(String.format(binding.airHumidityTomorrowTxt.getText().toString(), tomorrowForecast.getList().get(0).getHumidity()));
-        binding.weatherConditionTomorrowTxt.setText(tomorrowForecast.getList().get(0).getWeather().get(0).getMain());
-        binding.tempAverageTomorrowTxt.setText(String.format(binding.tempAverageTomorrowTxt.getText().toString(), tomorrowForecast.getList().get(0).getTemp().getDay().intValue()));
-        binding.tempAmplitudeTomorrowTxt.setText(String.format(binding.tempAmplitudeTomorrowTxt.getText().toString(), tomorrowForecast.getList().get(0).getTemp().getMin().intValue(), tomorrowForecast.getList().get(0).getTemp().getMax().intValue()));
-        binding.weatherDetailedConditionTomorrowTxt.setText(tomorrowForecast.getList().get(0).getWeather().get(0).getDescription());
-        binding.weatherConditionTomorrowImg.setImageResource(AppUtils.getCardBackgroundImage(tomorrowForecast.getList().get(0).getWeather().get(0).getMain()));
+    private void loadTodayDataFromDb() {
+        room.getTodayForecast(data -> CardFiller.fillTodayCardView(data, binding, getActivity()));
+    }
+
+    private void loadTomorrowDataFromDb() {
+        room.getTomorrowForecast(data -> CardFiller.fillTomorrowCardView(data, binding));
+    }
+
+    private void clearDb() {
+        room.deleteAll();
     }
 }

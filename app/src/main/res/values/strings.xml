@@ -2,6 +2,7 @@
     <string name="app_name">Hot or Not</string>
     <string name="current_weather">Current Weather</string>
     <string name="refresh">Refresh</string>
+    <string name="search">Search</string>
     <string name="today">Today</string>
     <string name="tomorrow">Tomorrow</string>
     <string name="temperature_holder">%d°</string>

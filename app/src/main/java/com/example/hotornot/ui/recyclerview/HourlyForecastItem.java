@@ -1,4 +1,4 @@
-package com.example.hotornot.recyclerview;
+package com.example.hotornot.ui.recyclerview;
 
 public class HourlyForecastItem {
     private String date;

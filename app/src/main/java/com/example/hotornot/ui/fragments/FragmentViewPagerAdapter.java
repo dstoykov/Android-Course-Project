@@ -1,4 +1,4 @@
-package com.example.hotornot;
+package com.example.hotornot.ui.fragments;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;

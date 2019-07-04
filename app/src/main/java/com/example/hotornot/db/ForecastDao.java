@@ -1,6 +1,7 @@
 package com.example.hotornot.db;
 
 import androidx.room.Dao;
+import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.Query;
 
@@ -11,9 +12,6 @@ public interface ForecastDao {
 
     @Insert
     void insert(Forecast forecast);
-
-    @Insert
-    void insertAll(Forecast... forecasts);
 
     @Insert
     void insertAll(List<Forecast> forecasts);
@@ -30,6 +28,6 @@ public interface ForecastDao {
     @Query("SELECT * FROM forecast")
     List<Forecast> getAll();
 
-    @Query("DELETE FROM forecast")
-    void deleteAll();
+    @Delete
+    void deleteAll(List<Forecast> all);
 }

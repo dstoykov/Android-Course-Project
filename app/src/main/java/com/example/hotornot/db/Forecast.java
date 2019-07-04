@@ -19,6 +19,9 @@ public class Forecast {
     @ColumnInfo(name = "dt")
     private String dt;
 
+    @ColumnInfo(name = "town")
+    private String town;
+
     @ColumnInfo(name = "cloud_percentage")
     private Integer cloudPercentage;
 
@@ -76,6 +79,14 @@ public class Forecast {
 
     public void setDt(final String dt) {
         this.dt = dt;
+    }
+
+    public String getTown() {
+        return this.town;
+    }
+
+    public void setTown(final String town) {
+        this.town = town;
     }
 
     public Integer getCloudPercentage() {

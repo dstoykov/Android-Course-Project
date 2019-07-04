@@ -6,6 +6,7 @@ import android.os.AsyncTask;
 import androidx.room.Room;
 
 import com.example.hotornot.util.AppUtils;
+import com.example.hotornot.util.ForecastType;
 
 import java.util.List;
 
@@ -15,7 +16,7 @@ public class RoomInstance {
     private final AppDb db;
 
     private RoomInstance(Context context) {
-        db = Room.databaseBuilder(context, AppDb.class, "app.db").build();
+        db = Room.databaseBuilder(context, AppDb.class, "hot_or_not.db").build();
     }
 
     public static RoomInstance getInstance(Context context) {
@@ -45,16 +46,6 @@ public class RoomInstance {
         }.execute();
     }
 
-    public void insertAllAsync(Forecast... forecasts) {
-        new AsyncTask<Void, Void, Void>() {
-            @Override
-            protected Void doInBackground(final Void... voids) {
-                db.forecastDao().insertAll(forecasts);
-                return null;
-            }
-        }.execute();
-    }
-
     public void getLastDateAdded(DatabaseListener<Long> callback) {
         new AsyncTask<Void, Void, Long>() {
             @Override
@@ -75,7 +66,7 @@ public class RoomInstance {
         new AsyncTask<Void, Void, Forecast>() {
             @Override
             protected Forecast doInBackground(final Void... voids) {
-                Forecast forecast = db.forecastDao().getForecast(AppUtils.FORECAST_TYPE_TODAY);
+                Forecast forecast = db.forecastDao().getForecast(ForecastType.FORECAST_TYPE_TODAY);
                 return forecast;
             }
 
@@ -91,7 +82,7 @@ public class RoomInstance {
         new AsyncTask<Void, Void, Forecast>() {
             @Override
             protected Forecast doInBackground(final Void... voids) {
-                Forecast forecast = db.forecastDao().getForecast(AppUtils.FORECAST_TYPE_TOMORROW);
+                Forecast forecast = db.forecastDao().getForecast(ForecastType.FORECAST_TYPE_TOMORROW);
                 return forecast;
             }
 
@@ -107,14 +98,14 @@ public class RoomInstance {
         new AsyncTask<Void, Void, List<Forecast>>() {
             @Override
             protected List<Forecast> doInBackground(final Void... voids) {
-                List<Forecast> stories = db.forecastDao().getHourlyForecast(AppUtils.FORECAST_TYPE_HOURLY);
+                List<Forecast> stories = db.forecastDao().getHourlyForecast(ForecastType.FORECAST_TYPE_HOURLY);
                 return stories;
             }
 
             @Override
-            protected void onPostExecute(final List<Forecast> stories) {
-                super.onPostExecute(stories);
-                callback.onDataReceived(stories);
+            protected void onPostExecute(final List<Forecast> forecasts) {
+                super.onPostExecute(forecasts);
+                callback.onDataReceived(forecasts);
             }
         }.execute();
     }
@@ -139,10 +130,11 @@ public class RoomInstance {
         new AsyncTask<Void, Void, Void>() {
             @Override
             protected Void doInBackground(Void... voids) {
-                db.forecastDao().deleteAll();
+                List<Forecast> all = db.forecastDao().getAll();
+                db.forecastDao().deleteAll(all);
                 return null;
             }
-        };
+        }.execute();
     }
 
     public interface DatabaseListener<T> {

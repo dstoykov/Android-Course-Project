@@ -13,6 +13,10 @@ import com.example.hotornot.util.AppUtils;
 import com.example.hotornot.util.SnackbarMaker;
 
 public class GpsLocation {
+    public static final Integer LOCATION_REQUEST_CODE = 7;
+    public static final Double DEFAULT_LATITUDE = 42.69751;
+    public static final Double DEFAULT_LONGITUDE = 23.32415;
+
     private static GpsLocation instance;
 
     private Location location;
@@ -41,7 +45,7 @@ public class GpsLocation {
         if (ActivityCompat.checkSelfPermission(contextActivity, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(contextActivity,
                     new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
-                    AppUtils.LOCATION_REQUEST_CODE);
+                    LOCATION_REQUEST_CODE);
         } else {
             if (!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
                 SnackbarMaker.showLocationSnackbar(contextActivity);

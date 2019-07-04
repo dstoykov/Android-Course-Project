@@ -1,4 +1,4 @@
-package com.example.hotornot;
+package com.example.hotornot.ui.activities;
 
 import androidx.core.app.ActivityCompat;
 import androidx.databinding.DataBindingUtil;
@@ -13,13 +13,17 @@ import androidx.appcompat.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuInflater;
 
+import com.example.hotornot.ui.fragments.DetailsFragment;
+import com.example.hotornot.ui.fragments.FragmentViewPagerAdapter;
+import com.example.hotornot.ui.fragments.OverallFragment;
+import com.example.hotornot.R;
 import com.example.hotornot.databinding.ActivityMainBinding;
-import com.example.hotornot.util.AppUtils;
+import com.example.hotornot.gps.GpsLocation;
 import com.example.hotornot.util.Configurations;
 
 public class MainActivity extends AppCompatActivity {
-    public static final String OVERALL_TAB_TITLE = "Overall";
-    public static final String DETAILS_TAB_TITLE = "Details";
+    private static final String OVERALL_TAB_TITLE = "Overall";
+    private static final String DETAILS_TAB_TITLE = "Details";
 
     private ActivityMainBinding binding;
     private FragmentViewPagerAdapter fragmentViewPagerAdapter;
@@ -50,7 +54,7 @@ public class MainActivity extends AppCompatActivity {
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(this,
                     new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
-                    AppUtils.LOCATION_REQUEST_CODE);
+                    GpsLocation.LOCATION_REQUEST_CODE);
         }
     }
 

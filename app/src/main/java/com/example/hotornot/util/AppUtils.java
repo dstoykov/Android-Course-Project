@@ -13,23 +13,12 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 public class AppUtils {
-    public static final Integer LOCATION_REQUEST_CODE = 7;
-    public static final Integer FIRST_ELEMENT_INDEX = 0;
-    public static final Double DEFAULT_LATITUDE = 42.69751;
-    public static final Double DEFAULT_LONGITUDE = 23.32415;
-    public static final String FORECAST_TYPE_TODAY = "TODAY";
-    public static final String FORECAST_TYPE_TOMORROW = "TOMORROW";
-    public static final String FORECAST_TYPE_HOURLY = "HOURLY";
+    private AppUtils() {}
 
-    private static final SimpleDateFormat DAILY_FORECAST_DATE_FORMAT = new SimpleDateFormat("dd.MM.yyyy");
-    private static final SimpleDateFormat HOURLY_FORECAST_DATE_FORMAT = new SimpleDateFormat("dd.MM HH:mm");
-
-    private AppUtils() {
-    }
-
-    public static int getCardBackgroundColor(Double temperature) {
+    public static int getCardBackgroundColor(Integer temperature) {
         if (temperature >= 22) {
             return R.color.yellow;
         } else if (temperature >= 15) {
@@ -64,65 +53,11 @@ public class AppUtils {
         }
     }
 
-    public static Forecast getDbEntityFromTodayForecast(TodayForecast todayForecast) {
-        Forecast forecast = new Forecast();
-        forecast.setDateAdded(Calendar.getInstance().getTimeInMillis());
-        forecast.setType(FORECAST_TYPE_TODAY);
-        forecast.setDt(DAILY_FORECAST_DATE_FORMAT.format(new Date(todayForecast.getDt() * 1000)));
-        forecast.setCloudPercentage(todayForecast.getClouds().getAll());
-        forecast.setWindSpeed(todayForecast.getWind().getSpeed().intValue());
-        forecast.setHumidity(todayForecast.getMain().getHumidity());
-        forecast.setWeatherCondition(todayForecast.getWeather().get(FIRST_ELEMENT_INDEX).getMain());
-        forecast.setTempAverage(todayForecast.getMain().getTemp().intValue());
-        forecast.setTempMin(todayForecast.getMain().getTemp_min().intValue());
-        forecast.setTempMax(todayForecast.getMain().getTemp_max().intValue());
-        forecast.setDetailedWeatherCondition(todayForecast.getWeather().get(FIRST_ELEMENT_INDEX).getDescription());
+    public static boolean are3HoursPassed(long creationDt) {
+        long currentDt = Calendar.getInstance().getTimeInMillis();
+        long diff = currentDt - creationDt;
+        long hours = TimeUnit.MILLISECONDS.toHours(diff);
 
-        return forecast;
-    }
-
-    public static Forecast getDbEntityFromTomorrowForecast(TomorrowForecast tomorrowForecast) {
-        DailyForecast dailyForecast = tomorrowForecast.getList().get(FIRST_ELEMENT_INDEX);
-
-        Forecast forecast = new Forecast();
-        forecast.setDateAdded(Calendar.getInstance().getTimeInMillis());
-        forecast.setType(FORECAST_TYPE_TOMORROW);
-        forecast.setDt(DAILY_FORECAST_DATE_FORMAT.format(new Date(dailyForecast.getDt() * 1000)));
-        forecast.setCloudPercentage(dailyForecast.getClouds());
-        forecast.setWindSpeed(dailyForecast.getSpeed().intValue());
-        forecast.setHumidity(dailyForecast.getHumidity());
-        forecast.setWeatherCondition(dailyForecast.getWeather().get(FIRST_ELEMENT_INDEX).getMain());
-        forecast.setTempAverage(dailyForecast.getTemp().getDay().intValue());
-        forecast.setTempMin(dailyForecast.getTemp().getMin().intValue());
-        forecast.setTempMax(dailyForecast.getTemp().getMax().intValue());
-        forecast.setDetailedWeatherCondition(dailyForecast.getWeather().get(FIRST_ELEMENT_INDEX).getDescription());
-
-        return forecast;
-    }
-
-    public static List<Forecast> getListOfDbEntitiesFromHourlyForecast(HourlyForecast hourlyForecast) {
-        List<Forecast> result = new ArrayList<>();
-        fillList(hourlyForecast, result);
-
-        return result;
-    }
-
-    private static void fillList(HourlyForecast hourlyForecast, List<Forecast> result) {
-        Forecast forecast = new Forecast();
-        for (SpecificHourForecast hourForecast : hourlyForecast.getList()) {
-            forecast.setDateAdded(Calendar.getInstance().getTimeInMillis());
-            forecast.setType(FORECAST_TYPE_HOURLY);
-            forecast.setDt(HOURLY_FORECAST_DATE_FORMAT.format(new Date(hourForecast.getDt() * 1000)));
-            forecast.setCloudPercentage(hourForecast.getClouds().getAll());
-            forecast.setWindSpeed(hourForecast.getWind().getSpeed().intValue());
-            forecast.setHumidity(hourForecast.getMain().getHumidity());
-            forecast.setWeatherCondition(hourForecast.getWeather().get(FIRST_ELEMENT_INDEX).getMain());
-            forecast.setTempAverage(hourForecast.getMain().getTemp().intValue());
-            forecast.setTempMin(hourForecast.getMain().getTemp_min().intValue());
-            forecast.setTempMax(hourForecast.getMain().getTemp_max().intValue());
-            forecast.setDetailedWeatherCondition(hourForecast.getWeather().get(FIRST_ELEMENT_INDEX).getDescription());
-
-            result.add(forecast);
-        }
+        return hours >= 3;
     }
 }
