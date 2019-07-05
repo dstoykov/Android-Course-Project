@@ -43,15 +43,16 @@ public class OverallFragment extends Fragment {
     }
 
     private void initViews() {
-//        binding.overallSwipeRefresh.setOnRefreshListener(() -> {
-//            dbController.updateDb();
-//            new Handler().postDelayed(new Runnable() {
-//                @Override
-//                public void run() {
-//                    loadForecast();
-//                }
-//            }, 1000);
-//        });
+        binding.overallSwipeRefresh.setOnRefreshListener(() -> {
+            updateForecast();
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    loadForecast();
+                    binding.overallSwipeRefresh.setRefreshing(false);
+                }
+            }, 3000);
+        });
     }
 
     private void loadForecast() {
@@ -64,6 +65,10 @@ public class OverallFragment extends Fragment {
     }
 
     private void loadTomorrowDataFromDb() {
-        room.getTomorrowForecast(data -> CardFiller.fillTomorrowCardView(data, binding));
+        room.getTomorrowForecast(data -> CardFiller.fillTomorrowCardView(data, binding, getActivity()));
+    }
+
+    private void updateForecast() {
+        dbController.updateTodayAndTomorrowForecast();
     }
 }

@@ -50,15 +50,16 @@ public class DetailsFragment extends Fragment {
     }
 
     private void initViews() {
-//        binding.detailsSwipeRefresh.setOnRefreshListener(() -> {
-//            dbController.updateDb();
-//            new Handler().postDelayed(new Runnable() {
-//                @Override
-//                public void run() {
-//                    loadDataFromDb();
-//                }
-//            }, 1000);
-//        });
+        binding.detailsSwipeRefresh.setOnRefreshListener(() -> {
+            updateForecast();
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    loadDataFromDb();
+                    binding.detailsSwipeRefresh.setRefreshing(false);
+                }
+            }, 3000);
+        });
     }
 
     private void loadDataFromDb() {
@@ -69,5 +70,9 @@ public class DetailsFragment extends Fragment {
         DetailsAdapter adapter = new DetailsAdapter(forecasts);
         binding.recViewDetails.setLayoutManager(new LinearLayoutManager(getContext()));
         binding.recViewDetails.setAdapter(adapter);
+    }
+
+    private void updateForecast() {
+        dbController.updateHourlyForecast();
     }
 }

@@ -120,6 +120,31 @@ public class RoomInstance {
         }.execute();
     }
 
+    public void deleteTodayAndTomorrow() {
+        new AsyncTask<Void, Void, Void>() {
+            @Override
+            protected Void doInBackground(Void... voids) {
+                List<Forecast> all = db.forecastDao().getAll();
+                Forecast today = db.forecastDao().getForecast(ForecastType.FORECAST_TYPE_TODAY);
+                Forecast tomorrow = db.forecastDao().getForecast(ForecastType.FORECAST_TYPE_TOMORROW);
+                db.forecastDao().delete(today);
+                db.forecastDao().delete(tomorrow);
+                return null;
+            }
+        }.execute();
+    }
+
+    public void deleteHourly() {
+        new AsyncTask<Void, Void, Void>() {
+            @Override
+            protected Void doInBackground(Void... voids) {
+                List<Forecast> all = db.forecastDao().getHourlyForecast(ForecastType.FORECAST_TYPE_HOURLY);
+                db.forecastDao().deleteAll(all);
+                return null;
+            }
+        }.execute();
+    }
+
     public interface DatabaseListener<T> {
         void onDataReceived(T data);
     }

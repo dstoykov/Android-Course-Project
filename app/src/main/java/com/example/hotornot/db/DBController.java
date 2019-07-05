@@ -69,6 +69,23 @@ public class DBController {
         AppUtils.checkInternetConnection(context);
     }
 
+    public void updateTodayAndTomorrowForecast() {
+        if (AppUtils.isInternetAvailable(context)) {
+            removeTodayAndTomorrowEntities();
+            getTodayForecastFromApi();
+            getTomorrowForecastFromApi();
+        }
+        AppUtils.checkInternetConnection(context);
+    }
+
+    public void updateHourlyForecast() {
+        if (AppUtils.isInternetAvailable(context)) {
+            removeHourlyEntities();
+            getHourlyForecastFromApi();
+        }
+        AppUtils.checkInternetConnection(context);
+    }
+
     private void loadForecastFromApi() {
         if (AppUtils.isInternetAvailable(context)) {
             getTodayForecastFromApi();
@@ -193,5 +210,13 @@ public class DBController {
 
     private void clearDb() {
         room.deleteAll();
+    }
+
+    private void removeTodayAndTomorrowEntities() {
+        room.deleteTodayAndTomorrow();
+    }
+
+    private void removeHourlyEntities() {
+        room.deleteHourly();
     }
 }

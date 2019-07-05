@@ -2,6 +2,7 @@ package com.example.hotornot.util;
 
 import android.app.Activity;
 
+import com.example.hotornot.R;
 import com.example.hotornot.databinding.FragmentOverallBinding;
 import com.example.hotornot.db.Forecast;
 
@@ -10,26 +11,26 @@ public class CardFiller {
 
     public static void fillTodayCardView(Forecast today, FragmentOverallBinding binding, Activity activity) {
         binding.relViewTodayOverall.setBackgroundResource(AppUtils.getCardBackgroundColor(today.getTempAverage()));
-        binding.cloudPercentageTodayTxt.setText(String.format(binding.cloudPercentageTodayTxt.getText().toString(), today.getCloudPercentage()));
-        binding.windSpeedTodayTxt.setText(String.format(binding.windSpeedTodayTxt.getText().toString(), today.getWindSpeed()));
-        binding.airHumidityTodayTxt.setText(String.format(binding.airHumidityTodayTxt.getText().toString(), today.getHumidity()));
+        binding.cloudPercentageTodayTxt.setText(String.format(activity.getResources().getString(R.string.percentage_placeholder), today.getCloudPercentage()));
+        binding.windSpeedTodayTxt.setText(String.format(activity.getResources().getString(R.string.m_per_s_placeholder), today.getWindSpeed()));
+        binding.airHumidityTodayTxt.setText(String.format(activity.getResources().getString(R.string.percentage_placeholder), today.getHumidity()));
         binding.weatherConditionTodayTxt.setText(today.getWeatherCondition());
-        binding.tempAverageTodayTxt.setText(String.format(binding.tempAverageTodayTxt.getText().toString(), today.getTempAverage()));
-        binding.tempAmplitudeTodayTxt.setText(String.format(binding.tempAmplitudeTodayTxt.getText().toString(), today.getTempMin(), today.getTempMax()));
+        binding.tempAverageTodayTxt.setText(String.format(activity.getResources().getString(R.string.temperature_holder), today.getTempAverage()));
+        binding.tempAmplitudeTodayTxt.setText(String.format(activity.getResources().getString(R.string.temp_amplitude_holder), today.getTempMin(), today.getTempMax()));
         binding.weatherDetailedConditionTodayTxt.setText(today.getDetailedWeatherCondition());
         binding.dateTodayTxt.setText(today.getDt());
         binding.weatherConditionTodayImg.setImageResource(AppUtils.getCardBackgroundImage(today.getWeatherCondition()));
         Configurations.setToolbarTitle(today.getTown(), activity);
     }
 
-    public static void fillTomorrowCardView(Forecast tomorrow, FragmentOverallBinding binding) {
+    public static void fillTomorrowCardView(Forecast tomorrow, FragmentOverallBinding binding, Activity activity) {
         binding.relViewTomorrowOverall.setBackgroundResource(AppUtils.getCardBackgroundColor(tomorrow.getTempAverage()));
-        binding.cloudPercentageTomorrowTxt.setText(String.format(binding.cloudPercentageTomorrowTxt.getText().toString(), tomorrow.getCloudPercentage()));
-        binding.windSpeedTomorrowTxt.setText(String.format(binding.windSpeedTomorrowTxt.getText().toString(), tomorrow.getWindSpeed()));
-        binding.airHumidityTomorrowTxt.setText(String.format(binding.airHumidityTomorrowTxt.getText().toString(), tomorrow.getHumidity()));
+        binding.cloudPercentageTomorrowTxt.setText(String.format(activity.getResources().getString(R.string.percentage_placeholder), tomorrow.getCloudPercentage()));
+        binding.windSpeedTomorrowTxt.setText(String.format(activity.getResources().getString(R.string.m_per_s_placeholder), tomorrow.getWindSpeed()));
+        binding.airHumidityTomorrowTxt.setText(String.format(activity.getResources().getString(R.string.percentage_placeholder), tomorrow.getHumidity()));
         binding.weatherConditionTomorrowTxt.setText(tomorrow.getWeatherCondition());
-        binding.tempAverageTomorrowTxt.setText(String.format(binding.tempAverageTomorrowTxt.getText().toString(), tomorrow.getTempAverage()));
-        binding.tempAmplitudeTomorrowTxt.setText(String.format(binding.tempAmplitudeTomorrowTxt.getText().toString(), tomorrow.getTempMin(), tomorrow.getTempMax()));
+        binding.tempAverageTomorrowTxt.setText(String.format(activity.getResources().getString(R.string.temperature_holder), tomorrow.getTempAverage()));
+        binding.tempAmplitudeTomorrowTxt.setText(String.format(activity.getResources().getString(R.string.temp_amplitude_holder), tomorrow.getTempMin(), tomorrow.getTempMax()));
         binding.weatherDetailedConditionTomorrowTxt.setText(tomorrow.getDetailedWeatherCondition());
         binding.dateTomorrowTxt.setText(tomorrow.getDt());
         binding.weatherConditionTomorrowImg.setImageResource(AppUtils.getCardBackgroundImage(tomorrow.getWeatherCondition()));

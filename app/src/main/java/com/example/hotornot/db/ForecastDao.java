@@ -29,5 +29,8 @@ public interface ForecastDao {
     List<Forecast> getAll();
 
     @Delete
+    void delete(Forecast forecast);
+
+    @Delete
     void deleteAll(List<Forecast> all);
 }
