@@ -5,7 +5,6 @@ import android.os.AsyncTask;
 
 import androidx.room.Room;
 
-import com.example.hotornot.util.AppUtils;
 import com.example.hotornot.util.ForecastType;
 
 import java.util.List;
@@ -50,7 +49,7 @@ public class RoomInstance {
         new AsyncTask<Void, Void, Long>() {
             @Override
             protected Long doInBackground(final Void... voids) {
-                Long dateAdded = db.forecastDao().getLastInsertedDateTime();
+                Long dateAdded = db.forecastDao().getFirstInsertedDateTime();
                 return dateAdded;
             }
 
@@ -106,22 +105,6 @@ public class RoomInstance {
             protected void onPostExecute(final List<Forecast> forecasts) {
                 super.onPostExecute(forecasts);
                 callback.onDataReceived(forecasts);
-            }
-        }.execute();
-    }
-
-    public void getAll(DatabaseListener<List<Forecast>> callback) {
-        new AsyncTask<Void, Void, List<Forecast>>() {
-            @Override
-            protected List<Forecast> doInBackground(final Void... voids) {
-                List<Forecast> stories = db.forecastDao().getAll();
-                return stories;
-            }
-
-            @Override
-            protected void onPostExecute(final List<Forecast> stories) {
-                super.onPostExecute(stories);
-                callback.onDataReceived(stories);
             }
         }.execute();
     }

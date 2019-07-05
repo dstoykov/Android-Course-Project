@@ -16,8 +16,8 @@ public interface ForecastDao {
     @Insert
     void insertAll(List<Forecast> forecasts);
 
-    @Query("SELECT date_added FROM forecast ORDER BY date_added DESC LIMIT 1")
-    Long getLastInsertedDateTime();
+    @Query("SELECT date_added FROM forecast ORDER BY date_added ASC LIMIT 1")
+    Long getFirstInsertedDateTime();
 
     @Query("SELECT * FROM forecast WHERE type LIKE :forecastType")
     Forecast getForecast(String forecastType);

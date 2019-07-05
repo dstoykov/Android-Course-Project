@@ -8,4 +8,6 @@
     <dimen name="text_huge">50sp</dimen>
     <dimen name="image_size_big">160dp</dimen>
     <dimen name="image_size_small">80dp</dimen>
+    <dimen name="logo_size">84dp</dimen>
+    <dimen name="progress_bar_size">100dp</dimen>
 </resources>
