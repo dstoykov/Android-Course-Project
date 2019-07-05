@@ -3,7 +3,11 @@ package com.example.hotornot.db;
 import android.app.Activity;
 import android.content.Context;
 import android.location.Location;
+import android.widget.Toast;
 
+import androidx.core.content.ContextCompat;
+
+import com.example.hotornot.R;
 import com.example.hotornot.gps.GpsLocation;
 import com.example.hotornot.model.HourlyForecast;
 import com.example.hotornot.model.TodayForecast;
@@ -13,6 +17,7 @@ import com.example.hotornot.retrofit.WeatherService;
 import com.example.hotornot.util.AppUtils;
 import com.example.hotornot.util.ModelMapper;
 import com.example.hotornot.util.SnackbarMaker;
+import com.google.android.material.snackbar.Snackbar;
 
 import java.util.List;
 
@@ -21,6 +26,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class DBController {
+    private static final String NO_INTERNET_MSG = "No Internet connection";
     private static DBController instance;
 
     private RetrofitInstance retrofit;
@@ -28,12 +34,14 @@ public class DBController {
     private GpsLocation gpsLocation;
     private Location location;
     private Activity activity;
+    private Context context;
 
     private DBController(Context context, Activity activity) {
         retrofit = RetrofitInstance.getInstance();
         room = RoomInstance.getInstance(context);
         gpsLocation = GpsLocation.getInstance(activity);
         this.activity = activity;
+        this.context = context;
     }
 
     public static DBController getInstance(Context context, Activity activity) {
@@ -54,14 +62,20 @@ public class DBController {
     }
 
     public void updateDb() {
-        clearDb();
-        loadForecastFromApi();
+        if (AppUtils.isInternetAvailable(context)) {
+            clearDb();
+            loadForecastFromApi();
+        }
+        AppUtils.checkInternetConnection(context);
     }
 
     private void loadForecastFromApi() {
-        getTodayForecastFromApi();
-        getTomorrowForecastFromApi();
-        getHourlyForecastFromApi();
+        if (AppUtils.isInternetAvailable(context)) {
+            getTodayForecastFromApi();
+            getTomorrowForecastFromApi();
+            getHourlyForecastFromApi();
+        }
+        AppUtils.checkInternetConnection(context);
     }
 
     private void getTodayForecastFromApi() {
@@ -96,7 +110,7 @@ public class DBController {
             @Override
             public void onFailure(Call<TodayForecast> call, Throwable t) {
                 t.printStackTrace();
-                SnackbarMaker.showNoInternetSnackbar(activity);
+                Toast.makeText(activity, NO_INTERNET_MSG, Toast.LENGTH_LONG).show();
             }
         });
     }
@@ -135,7 +149,7 @@ public class DBController {
             @Override
             public void onFailure(Call<TomorrowForecast> call, Throwable t) {
                 t.printStackTrace();
-                SnackbarMaker.showNoInternetSnackbar(activity);
+                Toast.makeText(activity, NO_INTERNET_MSG, Toast.LENGTH_LONG).show();
             }
         });
     }
@@ -172,7 +186,7 @@ public class DBController {
             @Override
             public void onFailure(Call<HourlyForecast> call, Throwable t) {
                 t.printStackTrace();
-                SnackbarMaker.showNoInternetSnackbar(activity);
+                Toast.makeText(activity, NO_INTERNET_MSG, Toast.LENGTH_LONG).show();
             }
         });
     }

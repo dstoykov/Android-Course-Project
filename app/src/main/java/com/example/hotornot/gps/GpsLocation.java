@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationManager;
+import android.widget.Toast;
 
 import androidx.core.app.ActivityCompat;
 
@@ -16,6 +17,7 @@ public class GpsLocation {
     public static final Integer LOCATION_REQUEST_CODE = 7;
     public static final Double DEFAULT_LATITUDE = 42.69751;
     public static final Double DEFAULT_LONGITUDE = 23.32415;
+    private static final String NO_LOCATION_MSG = "You have to enable Location information";
 
     private static GpsLocation instance;
 
@@ -48,7 +50,7 @@ public class GpsLocation {
                     LOCATION_REQUEST_CODE);
         } else {
             if (!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
-                SnackbarMaker.showLocationSnackbar(contextActivity);
+                Toast.makeText(contextActivity, NO_LOCATION_MSG, Toast.LENGTH_LONG).show();
             } else {
                 location = locationManager.getLastKnownLocation(locationManager.NETWORK_PROVIDER);
             }

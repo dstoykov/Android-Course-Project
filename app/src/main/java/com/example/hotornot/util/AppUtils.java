@@ -1,5 +1,12 @@
 package com.example.hotornot.util;
 
+import android.app.AlertDialog;
+import android.content.Context;
+import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
+import android.provider.Settings;
+
 import com.example.hotornot.R;
 import com.example.hotornot.db.Forecast;
 import com.example.hotornot.model.HourlyForecast;
@@ -16,6 +23,9 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 public class AppUtils {
+    private static final String MOBILE_DATA_BTN_TEXT = "Turn On Mobile Data";
+    private static final String WIFI_BTN_TEXT = "Turn On Wi-Fi";
+
     private AppUtils() {}
 
     public static int getCardBackgroundColor(Integer temperature) {
@@ -59,5 +69,23 @@ public class AppUtils {
         long hours = TimeUnit.MILLISECONDS.toHours(diff);
 
         return hours >= 3;
+    }
+
+    public static void checkInternetConnection(Context context) {
+        if (!isInternetAvailable(context)) {
+            AlertDialog.Builder dialog = new AlertDialog.Builder(context, R.style.AlertDialogTheme);
+            dialog.setCancelable(false);
+            dialog.setMessage("No Internet Connection");
+            dialog.setPositiveButton(WIFI_BTN_TEXT,
+                    (dialog1, which) -> context.startActivity(new Intent(Settings.ACTION_WIFI_SETTINGS)));
+            dialog.show();
+        }
+    }
+
+    public static boolean isInternetAvailable(Context context) {
+        ConnectivityManager connMgr = (ConnectivityManager)
+                context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
+        return (networkInfo != null && networkInfo.isConnected());
     }
 }

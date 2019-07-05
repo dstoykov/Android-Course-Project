@@ -8,6 +8,7 @@ import android.os.Handler;
 
 import com.example.hotornot.R;
 import com.example.hotornot.db.DBController;
+import com.example.hotornot.util.AppUtils;
 
 public class SplashActivity extends AppCompatActivity {
     private static final Long DELAY_MILLIS = 2000L;
