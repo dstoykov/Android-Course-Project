@@ -18,6 +18,8 @@ public class ModelMapper {
     private static final Integer FIRST_ELEMENT_INDEX = 0;
     private static final SimpleDateFormat DAILY_FORECAST_DATE_FORMAT = new SimpleDateFormat("dd.MM.yyyy");
     private static final SimpleDateFormat HOURLY_FORECAST_DATE_FORMAT = new SimpleDateFormat("dd.MM HH:mm");
+    private static final long DATE_MILLIS_MULTIPLIER = 1000L;
+    private static final long ONE_DAY_DURATION = 1L;
 
     private ModelMapper() {}
 
@@ -25,7 +27,7 @@ public class ModelMapper {
         Forecast forecast = new Forecast();
         forecast.setDateAdded(Calendar.getInstance().getTimeInMillis());
         forecast.setType(ForecastType.FORECAST_TYPE_TODAY);
-        forecast.setDt(DAILY_FORECAST_DATE_FORMAT.format(new Date(todayForecast.getDt() * 1000)));
+        forecast.setDt(DAILY_FORECAST_DATE_FORMAT.format(new Date(todayForecast.getDt() * DATE_MILLIS_MULTIPLIER)));
         forecast.setTown(todayForecast.getName());
         forecast.setCloudPercentage(todayForecast.getClouds().getAll());
         forecast.setWindSpeed(todayForecast.getWind().getSpeed().intValue());
@@ -41,7 +43,7 @@ public class ModelMapper {
 
     public static Forecast getDbEntityFromTomorrowForecast(TomorrowForecast tomorrowForecast) {
         DailyForecast dailyForecast = tomorrowForecast.getList().get(FIRST_ELEMENT_INDEX);
-        Date tomorrowDate = new Date((dailyForecast.getDt() * 1000) + TimeUnit.DAYS.toMillis(1));
+        Date tomorrowDate = new Date((dailyForecast.getDt() * DATE_MILLIS_MULTIPLIER) + TimeUnit.DAYS.toMillis(ONE_DAY_DURATION));
 
         Forecast forecast = new Forecast();
         forecast.setDateAdded(Calendar.getInstance().getTimeInMillis());
@@ -71,7 +73,7 @@ public class ModelMapper {
             Forecast forecast = new Forecast();
             forecast.setDateAdded(Calendar.getInstance().getTimeInMillis());
             forecast.setType(ForecastType.FORECAST_TYPE_HOURLY);
-            forecast.setDt(HOURLY_FORECAST_DATE_FORMAT.format(new Date(hourForecast.getDt() * 1000)));
+            forecast.setDt(HOURLY_FORECAST_DATE_FORMAT.format(new Date(hourForecast.getDt() * DATE_MILLIS_MULTIPLIER)));
             forecast.setCloudPercentage(hourForecast.getClouds().getAll());
             forecast.setWindSpeed(hourForecast.getWind().getSpeed().intValue());
             forecast.setHumidity(hourForecast.getMain().getHumidity());

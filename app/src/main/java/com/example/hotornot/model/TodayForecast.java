@@ -14,17 +14,19 @@ public class TodayForecast {
     private Clouds clouds;
     private String name;
     private Long dt;
+    private String cod;
 
     public TodayForecast() {
     }
 
-    public TodayForecast(final List<Weather> weather, final AtmosphereConditions main, final Wind wind, final Clouds clouds, final String name, final Long dt) {
+    public TodayForecast(final List<Weather> weather, final AtmosphereConditions main, final Wind wind, final Clouds clouds, final String name, final Long dt, final String cod) {
         this.weather = weather;
         this.main = main;
         this.wind = wind;
         this.clouds = clouds;
         this.name = name;
         this.dt = dt;
+        this.cod = cod;
     }
 
     public List<Weather> getWeather() {
@@ -73,5 +75,13 @@ public class TodayForecast {
 
     public void setDt(final Long dt) {
         this.dt = dt;
+    }
+
+    public String getCod() {
+        return this.cod;
+    }
+
+    public void setCod(final String cod) {
+        this.cod = cod;
     }
 }

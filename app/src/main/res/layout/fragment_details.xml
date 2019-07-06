@@ -15,7 +15,8 @@
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rec_view_details"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                android:paddingBottom="@dimen/margin_medium">
 
             </androidx.recyclerview.widget.RecyclerView>
         </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>

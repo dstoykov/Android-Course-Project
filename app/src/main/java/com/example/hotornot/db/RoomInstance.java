@@ -10,12 +10,13 @@ import com.example.hotornot.util.ForecastType;
 import java.util.List;
 
 public class RoomInstance {
+    private static final String DB_NAME = "hot_or_not.db";
     private static RoomInstance instance;
 
     private final AppDb db;
 
     private RoomInstance(Context context) {
-        db = Room.databaseBuilder(context, AppDb.class, "hot_or_not.db").build();
+        db = Room.databaseBuilder(context, AppDb.class, DB_NAME).build();
     }
 
     public static RoomInstance getInstance(Context context) {
@@ -32,6 +33,11 @@ public class RoomInstance {
                 db.forecastDao().insert(forecast);
                 return null;
             }
+
+            @Override
+            protected void onPostExecute(final Void aVoid) {
+                super.onPostExecute(aVoid);
+            }
         }.execute();
     }
 
@@ -41,6 +47,11 @@ public class RoomInstance {
             protected Void doInBackground(final Void... voids) {
                 db.forecastDao().insertAll(forecasts);
                 return null;
+            }
+
+            @Override
+            protected void onPostExecute(final Void aVoid) {
+                super.onPostExecute(aVoid);
             }
         }.execute();
     }
@@ -117,6 +128,11 @@ public class RoomInstance {
                 db.forecastDao().deleteAll(all);
                 return null;
             }
+
+            @Override
+            protected void onPostExecute(final Void aVoid) {
+                super.onPostExecute(aVoid);
+            }
         }.execute();
     }
 
@@ -131,6 +147,11 @@ public class RoomInstance {
                 db.forecastDao().delete(tomorrow);
                 return null;
             }
+
+            @Override
+            protected void onPostExecute(final Void aVoid) {
+                super.onPostExecute(aVoid);
+            }
         }.execute();
     }
 
@@ -141,6 +162,11 @@ public class RoomInstance {
                 List<Forecast> all = db.forecastDao().getHourlyForecast(ForecastType.FORECAST_TYPE_HOURLY);
                 db.forecastDao().deleteAll(all);
                 return null;
+            }
+
+            @Override
+            protected void onPostExecute(final Void aVoid) {
+                super.onPostExecute(aVoid);
             }
         }.execute();
     }

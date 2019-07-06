@@ -10,9 +10,6 @@ import android.widget.Toast;
 
 import androidx.core.app.ActivityCompat;
 
-import com.example.hotornot.util.AppUtils;
-import com.example.hotornot.util.SnackbarMaker;
-
 public class GpsLocation {
     public static final Integer LOCATION_REQUEST_CODE = 7;
     public static final Double DEFAULT_LATITUDE = 42.69751;

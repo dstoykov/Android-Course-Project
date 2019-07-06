@@ -1,25 +1,17 @@
 package com.example.hotornot.ui.activities;
 
+import androidx.appcompat.widget.SearchView;
 import androidx.core.app.ActivityCompat;
 import androidx.databinding.DataBindingUtil;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.Manifest;
-import android.app.AlertDialog;
-import android.app.Dialog;
-import android.content.Context;
-import android.content.DialogInterface;
-import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
-import android.net.wifi.WifiManager;
 import android.os.Bundle;
 
 import androidx.appcompat.widget.Toolbar;
 
 import android.os.Handler;
-import android.provider.Settings;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -32,9 +24,7 @@ import com.example.hotornot.ui.fragments.OverallFragment;
 import com.example.hotornot.R;
 import com.example.hotornot.databinding.ActivityMainBinding;
 import com.example.hotornot.gps.GpsLocation;
-import com.example.hotornot.util.AppUtils;
 import com.example.hotornot.util.Configurations;
-import com.google.android.material.snackbar.Snackbar;
 
 public class MainActivity extends AppCompatActivity {
     private static final String OVERALL_TAB_TITLE = "Overall";
@@ -51,19 +41,12 @@ public class MainActivity extends AppCompatActivity {
         initScreen();
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        AppUtils.checkInternetConnection(this);
-    }
-
     private void initScreen() {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main);
         binding.progressBar.setVisibility(View.INVISIBLE);
         dbController = DBController.getInstance(this, this);
         setSupportActionBar((Toolbar) binding.toolbar);
         Configurations.configureTabLayoutTextColors(binding.tabLayout, R.color.lightGrey, R.color.white, this);
-        AppUtils.checkInternetConnection(this);
         initFragments();
         askForLocationPermission();
     }
@@ -89,15 +72,43 @@ public class MainActivity extends AppCompatActivity {
         binding.progressBar.setVisibility(View.VISIBLE);
         dbController.updateDb();
         new Handler().postDelayed(() -> initFragments(), DELAY_MILLIS);
-        new Handler().postDelayed(() -> {
-            binding.progressBar.setVisibility(View.INVISIBLE);
-        }, DELAY_MILLIS);
+        new Handler().postDelayed(() -> binding.progressBar.setVisibility(View.INVISIBLE), DELAY_MILLIS);
+    }
+
+    private void refreshForecastByTown(String town) {
+        binding.progressBar.bringToFront();
+        binding.progressBar.setVisibility(View.VISIBLE);
+        dbController.updateDbByTown(town);
+        new Handler().postDelayed(() -> initFragments(), DELAY_MILLIS);
+        new Handler().postDelayed(() -> binding.progressBar.setVisibility(View.INVISIBLE), DELAY_MILLIS);
+    }
+
+    private void initSearchViewListeners(MenuItem item, SearchView searchView) {
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                if (!query.isEmpty()) {
+                    refreshForecastByTown(query);
+                }
+                searchView.clearFocus();
+                item.collapseActionView();
+                return true;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                return false;
+            }
+        });
     }
 
     @Override
     public boolean onCreateOptionsMenu(final Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menu_main, menu);
+        MenuItem item = menu.findItem(R.id.search);
+        SearchView searchView = (SearchView) item.getActionView();
+        initSearchViewListeners(item, searchView);
         return true;
     }
 

@@ -23,15 +23,17 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 public class AppUtils {
-    private static final String MOBILE_DATA_BTN_TEXT = "Turn On Mobile Data";
-    private static final String WIFI_BTN_TEXT = "Turn On Wi-Fi";
+
+    private static final int TEMP_22 = 22;
+    private static final int TEMP_15 = 15;
+    private static final long MAX_INTERVAL_BEFORE_UPDATE = 3L;
 
     private AppUtils() {}
 
     public static int getCardBackgroundColor(Integer temperature) {
-        if (temperature >= 22) {
+        if (temperature >= TEMP_22) {
             return R.color.yellow;
-        } else if (temperature >= 15) {
+        } else if (temperature >= TEMP_15) {
             return R.color.green;
         } else {
             return R.color.blue;
@@ -68,18 +70,7 @@ public class AppUtils {
         long diff = currentDt - creationDt;
         long hours = TimeUnit.MILLISECONDS.toHours(diff);
 
-        return hours >= 3;
-    }
-
-    public static void checkInternetConnection(Context context) {
-        if (!isInternetAvailable(context)) {
-            AlertDialog.Builder dialog = new AlertDialog.Builder(context, R.style.AlertDialogTheme);
-            dialog.setCancelable(false);
-            dialog.setMessage("No Internet Connection");
-            dialog.setPositiveButton(WIFI_BTN_TEXT,
-                    (dialog1, which) -> context.startActivity(new Intent(Settings.ACTION_WIFI_SETTINGS)));
-            dialog.show();
-        }
+        return hours >= MAX_INTERVAL_BEFORE_UPDATE;
     }
 
     public static boolean isInternetAvailable(Context context) {

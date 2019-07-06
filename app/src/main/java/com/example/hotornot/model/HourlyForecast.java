@@ -8,13 +8,14 @@ import java.util.List;
 public class HourlyForecast {
     private List<SpecificHourForecast> list;
     private City city;
+    private Integer cod;
 
-    public HourlyForecast() {
-    }
+    public HourlyForecast() {}
 
-    public HourlyForecast(final List<SpecificHourForecast> list, final City city) {
+    public HourlyForecast(final List<SpecificHourForecast> list, final City city, final Integer cod) {
         this.list = list;
         this.city = city;
+        this.cod = cod;
     }
 
     public List<SpecificHourForecast> getList() {
@@ -31,5 +32,13 @@ public class HourlyForecast {
 
     public void setCity(final City city) {
         this.city = city;
+    }
+
+    public Integer getCod() {
+        return this.cod;
+    }
+
+    public void setCod(final Integer cod) {
+        this.cod = cod;
     }
 }
